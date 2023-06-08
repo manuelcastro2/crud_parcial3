@@ -3,64 +3,52 @@ package com.crud_parcial3.app.Controller;
 import com.crud_parcial3.app.Entity.Eventos;
 import com.crud_parcial3.app.Service.IEventosService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import java.util.Map;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/eventos")
+@Controller
+@SessionAttributes("eventos")
 public class EventosController {
 
     @Autowired
-    private IEventosService eventosService;
+    private IEventosService eventosservice;
 
-    @GetMapping("/")
-    public ResponseEntity<List<Eventos>> getAllEventos() {
-        List<Eventos> eventosList = eventosService.findAll();
-        return new ResponseEntity<>(eventosList, HttpStatus.OK);
-    }
+    @GetMapping("/SaveEventos")
+	public String CallformEEvento(Map<String, Object> model) {
+		Eventos eventos = new Eventos();
+		model.put("eventos", eventos);
+		return "SaveEventos";
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Eventos> getEventoById(@PathVariable Long id) {
-        Eventos evento = eventosService.findOne(id);
-        if (evento != null) {
-            return new ResponseEntity<>(evento, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	@PostMapping("/SaveEventos")
+	public String SaveEventos(Eventos eventos, BindingResult result, Model model,
+			SessionStatus status) {
+		if (result.hasErrors()) {
+			return "SaveEventos";
+		}
 
-    @PostMapping("/")
-    public ResponseEntity<Eventos> createEvento(@RequestBody Eventos evento) {
-        eventosService.save(evento);
-        return new ResponseEntity<>(evento, HttpStatus.CREATED);
-    }
+		eventosservice.save(eventos);
+		status.setComplete();
+		return "redirect:/listarEventos";
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Eventos> updateEvento(@PathVariable Long id, @RequestBody Eventos eventoDetails) {
-        Eventos evento = eventosService.findOne(id);
-        if (evento != null) {
-            evento.setNombreEvento(eventoDetails.getNombreEvento());
-            evento.setFechaEvento(eventoDetails.getFechaEvento());
-            evento.setDuracion(eventoDetails.getDuracion());
-            evento.setValor(eventoDetails.getValor());
-            eventosService.save(evento);
-            return new ResponseEntity<>(evento, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	@GetMapping("/listarEventos")
+	public String mostrarlistarAsociacion(Model model) {
+		model.addAttribute("eventos", eventosservice.findAll());
+		return "listarEventos";
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteEvento(@PathVariable Long id) {
-        Eventos evento = eventosService.findOne(id);
-        if (evento != null) {
-            eventosService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	@GetMapping("/eliminarEventos/{id}")
+	public String borrarAsociacion(@PathVariable("id") Long id) {
+		if (id > 0) {
+			eventosservice.delete(id);
+		}
+		return "redirect:/listarEventos";
+	}
+
+	
 }

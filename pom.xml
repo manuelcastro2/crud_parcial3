@@ -87,7 +87,12 @@
 			<scope>test</scope>
 		</dependency>
 
-		
+
+		<dependency>
+			<groupId>com.bolsadeideas.springboot.datajpa.app</groupId>
+			<artifactId>spring-boot-data-jpa</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

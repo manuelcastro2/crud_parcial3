@@ -5,64 +5,65 @@ import com.crud_parcial3.app.Service.IResidentesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
-@RestController
-@RequestMapping("/residentes")
+@Controller
+@SessionAttributes("residentes")
 public class ResidentesController {
 
     @Autowired
-    private IResidentesService residentesService;
+    private IResidentesService residentesservice;
 
-    @GetMapping
-    public ResponseEntity<List<Residentes>> getAllResidentes() {
-        List<Residentes> residentes = residentesService.findAll();
-        return new ResponseEntity<>(residentes, HttpStatus.OK);
-    }
+    @GetMapping("/SaveResidentes")
+	public String CallFormResidentes(Map<String, Object> model) {
+		Residentes residentes = new Residentes();
+		model.put("residentes", residentes);
+		return "SaveResidentes";
+	}
 
-    @PostMapping
-    public ResponseEntity<Void> createResidente(@Valid @RequestBody Residentes residente) {
-        residentesService.save(residente);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+	@PostMapping("/formAsociacion")
+	public String SaveResidente(@Valid Residentes residentes, BindingResult result, Model model,
+			SessionStatus status) {
+		if (result.hasErrors()) {
+			return "SaveResidentes";
+		}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Residentes> getResidenteById(@PathVariable("id") Long id) {
-        Residentes residente = residentesService.findOne(id);
-        if (residente != null) {
-            return new ResponseEntity<>(residente, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+		residentesservice.save(residentes);
+		status.setComplete();
+		return "redirect:/listarResidentes";
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateResidente(@PathVariable("id") Long id, @Valid @RequestBody Residentes residente) {
-        Residentes existingResidente = residentesService.findOne(id);
-        if (existingResidente != null) {
-            existingResidente.setNombre(residente.getNombre());
-            existingResidente.setCedula(residente.getCedula());
-            existingResidente.setCorreo(residente.getCorreo());
-            existingResidente.setClave(residente.getClave());
-            residentesService.save(existingResidente);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	@GetMapping("/listarResidentes")
+	public String mostrarlistarAsociacion(Model model) {
+		model.addAttribute("residentes", residentesservice.findAll());
+		return "listarResidentes";
+	}
 
+	@GetMapping("/eliminarResidentes/{cedula}")
+	public String borrarAsociacion(@PathVariable("cedula") Long cedula) {
+		if (cedula > 0) {
+			residentesservice.delete(cedula);
+		}
+		return "redirect:/listarResidentes";
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteResidente(@PathVariable("id") Long id) {
-        Residentes residente = residentesService.findOne(id);
-        if (residente != null) {
-            residentesService.delete(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+	@GetMapping("SaveResidentes/{cedula}")
+	public String editarResidentes(@PathVariable("cedula") Long cedula, Map<String, Object> model) {
+		Residentes residentes = null;
+		if (cedula > 0) {
+			residentes = residentesservice.findOne(cedula);
+		} else {
+			return "redirect:/listarResidentes";
+		}
+		model.put("residentes", residentes);
+		return "SaveResidentes";
+	}
 }

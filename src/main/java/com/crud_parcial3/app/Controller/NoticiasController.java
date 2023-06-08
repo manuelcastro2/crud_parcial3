@@ -1,64 +1,57 @@
 package com.crud_parcial3.app.Controller;
 
+import com.crud_parcial3.app.Entity.Eventos;
 import com.crud_parcial3.app.Entity.Noticias;
 import com.crud_parcial3.app.Service.INoticiasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.List;
+import java.util.Map;
 
-@RestController
-@RequestMapping("/noticias")
+@Controller
+@SessionAttributes("noticias")
 public class NoticiasController {
 
     @Autowired
-    private INoticiasService noticiasService;
+    private INoticiasService noticiasservice;
 
-    @GetMapping("/")
-    public ResponseEntity<List<Noticias>> getAllNoticias() {
-        List<Noticias> noticiasList = noticiasService.findAll();
-        return new ResponseEntity<>(noticiasList, HttpStatus.OK);
-    }
+    @GetMapping("/SaveNoticias")
+   	public String CallformNoticias(Map<String, Object> model) {
+   		Noticias noticias = new Noticias();
+   		model.put("noticias", noticias);
+   		return "SaveNoticias";
+   	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Noticias> getNoticiaById(@PathVariable Long id) {
-        Noticias noticia = noticiasService.findOne(id);
-        if (noticia != null) {
-            return new ResponseEntity<>(noticia, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+   	@PostMapping("/SaveNoticias")
+   	public String SaveEventos(Noticias noticias, BindingResult result, Model model,
+   			SessionStatus status) {
+   		if (result.hasErrors()) {
+   			return "SaveNoticias";
+   		}
 
-    @PostMapping("/")
-    public ResponseEntity<Noticias> createNoticia(@RequestBody Noticias noticia) {
-        noticiasService.save(noticia);
-        return new ResponseEntity<>(noticia, HttpStatus.CREATED);
-    }
+   		noticiasservice.save(noticias);
+   		status.setComplete();
+   		return "redirect:/listarNoticias";
+   	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Noticias> updateNoticia(@PathVariable Long id, @RequestBody Noticias noticiaDetails) {
-        Noticias noticia = noticiasService.findOne(id);
-        if (noticia != null) {
-            noticia.setNoticia(noticiaDetails.getNoticia());
-            noticia.setFechaNoticia(noticiaDetails.getFechaNoticia());
-            noticiasService.save(noticia);
-            return new ResponseEntity<>(noticia, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+   	@GetMapping("/listarNoticias")
+   	public String mostrarlistarAsociacion(Model model) {
+   		model.addAttribute("noticias", noticiasservice.findAll());
+   		return "listarNoticias";
+   	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNoticia(@PathVariable Long id) {
-        Noticias noticia = noticiasService.findOne(id);
-        if (noticia != null) {
-            noticiasService.delete(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+   	@GetMapping("/eliminarEventos/{id}")
+   	public String borrarAsociacion(@PathVariable("id") Long id) {
+   		if (id > 0) {
+   			noticiasservice.delete(id);
+   		}
+   		return "redirect:/listarNoticias";
+   	}
 }
