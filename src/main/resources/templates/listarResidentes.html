@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LISTAR RESIDENTES</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LISTAR RESIDENTES</title>
 </head>
 <body>
-    <div>
-        <div>
-            <div>
-                <a href="">INGRESE RESIDENTES</a>
-            </div>
-            <div>
-                <table>
-                    <thead>
-                        <td>
-                            nombre
-                        </td>
-                        <td>
-                            cedula
-                        </td>
-                        <td>
-                            correo
-                        </td>
-                        <td>
-                            clave
-                        </td>
-                        <td>
-                            acciones
-                        </td>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div>
+		<div>
+			<div>
+				<form th:action="@{/indexadmin}" method="post">
+					<button type="submit">volver</button>
+				</form>
+			</div>
+			<div>
+				<a th:href="@{/SaveResidentes}">INGRESE RESIDENTES</a>
+			</div>
+			<div>
+				<table>
+					<thead>
+						<td>nombre</td>
+						<td>cedula</td>
+						<td>correo</td>
+						<td>clave</td>
+						<td  colspan="2" >acciones</td>
+					</thead>
+					<tbody>
+						<tr th:each="residentes: ${residentes}">
+							<td th:text="${residentes.cedula}"></td>
+							<td th:text="${residentes.nombre}"></td>
+							<td th:text="${residentes.correo}"></td>
+							<td th:text="${residentes.clave}"></td>
+					<td><a  th:href="@{/eliminarResidentes/} + ${residentes.cedula}" th:text="'eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

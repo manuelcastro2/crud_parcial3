@@ -55,6 +55,14 @@ public class salonComunal {
 	public void setHoraReservacion(String horaReservacion) {
 		this.horaReservacion = horaReservacion;
 	}
+
+	public String getIdResidente() {
+		return idResidente;
+	}
+
+	public void setIdResidente(String idResidente) {
+		this.idResidente = idResidente;
+	}
 	
 	
 

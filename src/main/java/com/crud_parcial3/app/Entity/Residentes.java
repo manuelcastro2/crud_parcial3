@@ -13,7 +13,7 @@ public class Residentes {
 	
 	@Id
 	@Column(unique = true)
-	private String Cedula;
+	private long Cedula;
 	
 	@NotEmpty
 	private String Correo;
@@ -29,11 +29,11 @@ public class Residentes {
 		Nombre = nombre;
 	}
 
-	public String getCedula() {
+	public Long getCedula() {
 		return Cedula;
 	}
 
-	public void setCedula(String cedula) {
+	public void setCedula(Long cedula) {
 		Cedula = cedula;
 	}
 

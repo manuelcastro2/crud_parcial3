@@ -12,7 +12,7 @@ public class Administrador {
 	
 	@Id
 	@Column(unique = true)
-	private String Cedula;
+	private Long Cedula;
 	
 	@NotEmpty
 	private String Clave;
@@ -26,11 +26,11 @@ public class Administrador {
 		Nombre = nombre;
 	}
 
-	public String getCedula() {
+	public Long getCedula() {
 		return Cedula;
 	}
 
-	public void setCedula(String cedula) {
+	public void setCedula(Long cedula) {
 		Cedula = cedula;
 	}
 

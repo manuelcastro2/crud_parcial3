@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LISTAR NOTICIAS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LISTAR NOTICIAS</title>
 </head>
 <body>
-    <div>
-        <div>
-            <div>
-                <a href="">INGRESE NOTICIAS</a>
-            </div>
-            <div>
-                <table>
-                    <thead>
-                        <td>
-                            id
-                        </td>
-                        <td>
-                            noticia
-                        </td>
-                        <td>
-                            fecha
-                        </td>
-                        <td>
-                            acciones
-                        </td>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div>
+		<div>
+			<div>
+				<form th:action="@{/indexResidentes}" method="post">
+					<button type="submit">volver</button>
+				</form>
+			</div>
+			<div>
+				<a th:href="@{/SaveNoticias}">INGRESE NOTICIAS</a>
+			</div>
+			<div>
+				<table>
+					<thead>
+						<td>id</td>
+						<td>noticia</td>
+						<td>fecha</td>
+						<td>acciones</td>
+					</thead>
+					<tbody>
+						<tr th:each="noticias: ${noticias}">
+							<td th:text="${noticias.id}"></td>
+							<td th:text="${noticias.noticia}"></td>
+							<td th:text="${noticias.fechaNoticia}"></td>
+							<td><a  th:href="@{/eliminarNoticias/} + ${noticias.id}" th:text="'eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

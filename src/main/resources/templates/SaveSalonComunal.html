@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORMULARIO EVENTOS</title>
+</head>
+
+<body>
+	<div>
+		<div>
+			<h1>FORMULARIO</h1>
+			<div>
+				<form th:action="@{/SaveSalonComunal}" method="post"
+					th:object="${saloncomunal}">
+					<input type="text" placeholder="reservacion" th:field="*{reservacion}"> 
+					<input type="date" placeholder="fecha" th:field="*{fechaReservacion}">
+					 <input type="text" placeholder="hora" th:field="*{horaReservacion}">
+					<select th:field="*{idResidente}">
+						<option th:each="resi: ${residentes}"
+							th:value="${resi.cedula}" th:text="${resi.nombre}"></option>
+					</select>
+					<button type="submit">GUARDAR</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

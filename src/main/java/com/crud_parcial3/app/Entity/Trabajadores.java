@@ -12,7 +12,7 @@ public class Trabajadores {
 	
 	@Id
 	@Column(unique = true)
-	private String Cedula;
+	private Long Cedula;
 	
 	@NotEmpty
 	private String Cargo;
@@ -31,11 +31,11 @@ public class Trabajadores {
 		Nombre = nombre;
 	}
 
-	public String getCedula() {
+	public Long getCedula() {
 		return Cedula;
 	}
 
-	public void setCedula(String cedula) {
+	public void setCedula(Long cedula) {
 		Cedula = cedula;
 	}
 

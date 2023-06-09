@@ -2,43 +2,46 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LISTAR EVENTOS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LISTAR EVENTOS</title>
 </head>
 
 <body>
-    <div>
-        <div>
-            <div>
-                <a href="">INGRESE EVENTOS</a>
-            </div>
-            <div>
-                <table>
-                    <thead>
-                        <td>
-                            id
-                        </td>
-                        <td>
-                            evento
-                        </td>
-                        <td>
-                            fecha
-                        </td>
-                        <td>
-                            duraccion
-                        </td>
-                        <td>
-                            valor
-                        </td>
-                        <td>
-                            acciones
-                        </td>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div>
+		<div>
+			<div>
+				<form th:action="@{/indexResidentes}" method="post">
+					<button type="submit">volver</button>
+				</form>
+			</div>
+			<div>
+				<a th:href="@{SaveEventos}">INGRESE EVENTOS</a>
+			</div>
+			<div>
+				<table>
+					<thead>
+						<td>id</td>
+						<td>evento</td>
+						<td>fecha</td>
+						<td>duraccion</td>
+						<td>valor</td>
+						<td>acciones</td>
+					</thead>
+					<tbody>
+						<tr th:each="eventos: ${eventos}">
+							<td th:text="${eventos.id}"></td>
+							<td th:text="${eventos.nombreEvento}"></td>
+							<td th:text="${eventos.fechaEvento}"></td>
+							<td th:text="${eventos.duracion}"></td>
+							<td th:text="${eventos.valor}"></td>
+							<td><a  th:href="@{/eliminarEventos/} + ${eventos.id}" th:text="'eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

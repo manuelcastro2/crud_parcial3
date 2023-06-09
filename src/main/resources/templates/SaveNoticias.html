@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMULARIO NOTICIAS</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h1>FORMULARIO</h1>
+            <div>
+                <form th:action="@{/SaveNoticias}" method="post" th:object="${noticias}">
+                    <input type="text" placeholder="noticia" th:field="*{noticia}">
+                    <input type="date" placeholder="fecha" th:field="*{fechaNoticia}">
+                    <button type="submit">GUARDAR</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

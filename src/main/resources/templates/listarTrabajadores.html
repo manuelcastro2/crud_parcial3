@@ -2,43 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LISTAR TRABAJADORES</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LISTAR TRABAJADORES</title>
 </head>
 
 <body>
-    <div>
-        <div>
-            <div>
-                <a href="">INGRESE RESIDENTES</a>
-            </div>
-            <div>
-                <table>
-                    <thead>
-                        <td>
-                            nombre
-                        </td>
-                        <td>
-                            cedula
-                        </td>
-                        <td>
-                            cargo
-                        </td>
-                        <td>
-                            empresa
-                        </td>
-                        <td>
-                            clave
-                        </td>
-                        <td>
-                            acciones
-                        </td>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div>
+		<div>
+			<div>
+				<form th:action="@{/indexadmin}" method="post">
+					<button type="submit">volver</button>
+				</form>
+			</div>
+			<div>
+				<a th:href="@{/SaveTrabajadores}">INGRESE TRABAJADORES</a>
+			</div>
+			<div>
+				<table>
+					<thead>
+						<td>nombre</td>
+						<td>cedula</td>
+						<td>cargo</td>
+						<td>empresa</td>
+						<td>clave</td>
+						<td  colspan="2" >acciones</td>
+					</thead>
+					<tbody>
+						<tr th:each="trabajadores: ${trabajadores}">
+							<td th:text="${trabajadores.cedula}"></td>
+							<td th:text="${trabajadores.nombre}"></td>
+							<td th:text="${trabajadores.cargo}"></td>
+							<td th:text="${trabajadores.empresa}"></td>
+							<td th:text="${trabajadores.clave}"></td>
+							<td><a th:href="@{/SaveTrabajadores/} + ${trabajadores.cedula}" th:text="'editar'"></a></td>
+					<td><a  th:href="@{/eliminarTrabajadores/} + ${trabajadores.cedula}" th:text="'eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

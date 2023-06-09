@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INDEX ADMINISTRADOR</title>
+</head>
+
+<body>
+    <div>
+        <div>
+        	<div>
+        		<a th:href="@{/}">Cerrar Sesion</a>
+        	</div>
+            <h1>
+                INDEX ADMIN
+            </h1>
+            <div>
+                <a th:href="@{/listarAdministrador}">ver administradores</a>
+                <a th:href="@{/listarResidentes}">ver Residentes</a>
+                <a th:href="@{listarTrabajadores}">ver Tranajadores</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

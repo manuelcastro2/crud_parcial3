@@ -17,6 +17,16 @@ public class AdministradorController {
     @Autowired
     private IAdministradorService administradorservice;
 
+	@GetMapping("/inicioadmin")
+	public String inicioAdministrador() {
+		return "inicioadmin";
+	}
+	
+	@PostMapping("/indexadmin")
+    public String indexAdmin() {
+		return "indexAdministrador";
+	}
+	
     @GetMapping("/SaveAdministrador")
     public String CallFormAdministrador(Map<String, Object> model) {
         Administrador administrador = new Administrador();
