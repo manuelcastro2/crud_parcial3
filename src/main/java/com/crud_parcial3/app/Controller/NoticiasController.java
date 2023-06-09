@@ -1,18 +1,14 @@
 package com.crud_parcial3.app.Controller;
 
-import com.crud_parcial3.app.Entity.Eventos;
 import com.crud_parcial3.app.Entity.Noticias;
 import com.crud_parcial3.app.Service.INoticiasService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -30,7 +26,7 @@ public class NoticiasController {
    	}
 
    	@PostMapping("/SaveNoticias")
-   	public String SaveEventos(Noticias noticias, BindingResult result, Model model,
+   	public String SaveNoticias(Noticias noticias, BindingResult result, Model model,
    			SessionStatus status) {
    		if (result.hasErrors()) {
    			return "SaveNoticias";
@@ -47,8 +43,8 @@ public class NoticiasController {
    		return "listarNoticias";
    	}
 
-   	@GetMapping("/eliminarEventos/{id}")
-   	public String borrarAsociacion(@PathVariable("id") Long id) {
+   	@GetMapping("/eliminarNoticias/{id}")
+   	public String borrarNoticias(@PathVariable("id") Long id) {
    		if (id > 0) {
    			noticiasservice.delete(id);
    		}
