@@ -1,12 +1,20 @@
 package com.crud_parcial3.app.Entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 
 @Entity
 @Table(name="residentes")
-public class Residentes {
+public class Residentes implements Serializable{
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	private static final long serialVersionUID = 1L;
 	
 	@NotEmpty
 	private String Nombre;

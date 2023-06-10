@@ -1,12 +1,16 @@
 package com.crud_parcial3.app.Entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
 
 @Entity
 @Table(name="administrador")
-public class Administrador {
+public class Administrador{
+	
+	
 	@NotEmpty
 	private String Nombre;
 	

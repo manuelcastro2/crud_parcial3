@@ -1,24 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMULARIO RESIDENTES</title>
 </head>
+
 <body>
-    <div>
-        <div>
+    <div class="contener-all">
+        <div class="contener-intermedate">
             <h1>FORMULARIO</h1>
-            <div>
-                <form th:action="@{/SaveResidentes}" method="post" th:object="${residentes}">
+            <form th:action="@{/SaveResidentes}" method="post" th:object="${residentes}">
+                <div class="contener-datos">
                     <input type="text" placeholder="nombre" th:field="*{nombre}">
                     <input type="text" placeholder="cedula" th:field="*{cedula}">
                     <input type="text" placeholder="correo" th:field="*{correo}">
                     <input type="text" placeholder="clave" th:field="*{clave}">
                     <button type="submit">GUARDAR</button>
-                </form>
-            </div>
+                </div>
+            </form>
+
         </div>
     </div>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+        }
+
+        .contener-all {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contener-intermedate {
+            width: 30%;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+        }
+
+        .contener-datos {
+            width: 300px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+        }
+
+        input {
+            padding: 10px 20px;
+            border-radius: 20px;
+            outline: 0 none;
+            border: 2px solid cadetblue;
+            transition: .4s all ease-in-out;
+        }
+
+        input:hover {
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            outline: 0 none;
+            background-color: cadetblue;
+            border: 1px solid cadetblue;
+            color: white;
+            transition: .4s all ease-in-out;
+        }
+
+        button:hover {
+            background-color: white;
+            color: cadetblue;
+        }
+         h1{
+            position: relative;
+            bottom:25px;
+         }
+    </style>
 </body>
+
 </html>
