@@ -29,16 +29,13 @@ public class ResidentesController {
 	public String inicioResidentes() {
 		return "inicioResidentes";
 	}
-<<<<<<< Updated upstream
-=======
     
     @RequestMapping(value = {"/listarResidentesExcel"}, method = RequestMethod.GET)
 	public String listarExcel(Model model) {
 		model.addAttribute("residentes", residentesservice.findAll());
 		return "listarResidentesExcel";
 	}
-    
->>>>>>> Stashed changes
+   
     @PostMapping("/indexResidentes")
 	public String indexResidentes() {
 		return "indexResidentes";
