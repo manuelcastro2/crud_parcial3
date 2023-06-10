@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
 @Controller
@@ -23,11 +29,43 @@ public class ResidentesController {
 	public String inicioResidentes() {
 		return "inicioResidentes";
 	}
-    
     @PostMapping("/indexResidentes")
-    public String indexResidentes() {
+	public String indexResidentes() {
 		return "indexResidentes";
 	}
+    
+    @PostMapping("/inicioResidentes")
+    public String validarinicioResidentes(@RequestParam("cedula") String cedula, @RequestParam("clave") String clave, Model model) {
+        
+        String url = "jdbc:mysql://localhost:3306/crud_corte3";
+        String username = "root";
+        String password = "";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+
+            String query = "SELECT * FROM residentes WHERE cedula = ? AND clave = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, cedula);
+            statement.setString(2, clave);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return "/indexResidentes";
+            } else {
+                model.addAttribute("error", "Los datos ingresados son incorrectos");
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            model.addAttribute("error", "Error de conexión a la base de datos");
+            
+        }
+
+        return "inicioResidentes";
+    }
+	
 
     @GetMapping("/SaveResidentes")
 	public String CallFormResidentes(Map<String, Object> model) {

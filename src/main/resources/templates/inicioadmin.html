@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INICIO SESION RESIDENTES</title>
+    <title>INICIO SESION ADMINISTRADOR</title>
 </head>
 
 <body>
     <div>
         <div>
-        	<h1>INICIO SESION</h1>
-            <form th:action="@{/indexadmin}" method="post">
-                <input type="text" placeholder="cedula" />
-                <input type="text" placeholder="clave" />
+            <h1>INICIO SESION</h1>
+            <form th:action="@{/inicioadmin}" method="post">
+                <input type="text" name="cedula" placeholder="cedula" />
+                <input type="password" name="clave" placeholder="clave" />
                 <button type="submit">ingresar</button>
             </form>
         </div>
