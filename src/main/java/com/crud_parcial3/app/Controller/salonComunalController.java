@@ -41,7 +41,7 @@ public class salonComunalController {
 
 	@GetMapping("/listarsalonComunal")
 	public String mostrarlistarAsociacion(Model model) {
-		model.addAttribute("asociacion", saloncomunalservice.findAll());
+		model.addAttribute("saloncomunal", saloncomunalservice.findAll());
 		return "listarsalonComunal";
 	}
 
@@ -50,7 +50,7 @@ public class salonComunalController {
 		if (id > 0) {
 			saloncomunalservice.delete(id);
 		}
-		return "redirect:/listarSalonComunal";
+		return "redirect:/listarsalonComunal";
 	}
 
 	@GetMapping("SaveSalonComunal/{id}")

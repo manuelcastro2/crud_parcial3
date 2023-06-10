@@ -28,6 +28,17 @@
 						<td>residente</td>
 						<td>acciones</td>
 					</thead>
+					<tbody>
+						<tr th:each="saloncomunal: ${saloncomunal}">
+							<td th:text="${saloncomunal.id}"></td>
+							<td th:text="${saloncomunal.reservacion}"></td>
+							<td th:text="${saloncomunal.fechaReservacion}"></td>
+							<td th:text="${saloncomunal.horaReservacion}"></td>
+							<td th:text="${saloncomunal.idResidente}"></td>
+							<td><a th:href="@{/SaveSalonComunal/} + ${saloncomunal.id}" th:text="'editar'"></a></td>
+					<td><a  th:href="@{/eliminarSalonComunal/} + ${saloncomunal.id}" th:text="'eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>

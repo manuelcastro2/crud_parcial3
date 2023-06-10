@@ -31,6 +31,7 @@
 							<td th:text="${residentes.nombre}"></td>
 							<td th:text="${residentes.correo}"></td>
 							<td th:text="${residentes.clave}"></td>
+							<td><a th:href="@{/SaveResidentes/} + ${residentes.cedula}" th:text="'editar'"></a></td>
 					<td><a  th:href="@{/eliminarResidentes/} + ${residentes.cedula}" th:text="'eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
 						</tr>
 					</tbody>
